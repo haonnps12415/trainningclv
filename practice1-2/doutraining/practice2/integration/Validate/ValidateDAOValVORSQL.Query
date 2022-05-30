@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="ValidateDAOValVORSQL">
+			<desc><![CDATA[ ]]></desc>
+			<sql><![CDATA[
+select count(1) sl
+from COM_INTG_CD a
+where 1=1
+#if (${sl} != '') 
+AND a.intg_cd_id = @[sl]
+#end			]]></sql>
+			<params>
+				<param name="sl" type="12" value="" out="N"/>
+			</params>
+		</query>
+	</querys>
+</sqls>

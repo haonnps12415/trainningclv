@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="ConditionRSQLDAOConditionRSQLRSQL">
+			<desc><![CDATA[DESC Enter..]]></desc>
+			<sql><![CDATA[
+SELECT
+A.OWNR_SUB_SYS_CD,
+A.INTG_CD_ID,
+REPLACE(A.INTG_CD_NM,'&','&'||'amp;') INTG_CD_NM,
+REPLACE(A.INTG_CD_DESC,'&','&'||'amp;') INTG_CD_DESC,
+A.INTG_CD_TP_CD,
+A.MNG_TBL_NM,
+A.INTG_CD_LEN,
+NVL(A.INTG_CD_USE_FLG,'Y') INTG_CD_USE_FLG,
+A.CRE_USR_ID,
+TO_CHAR(A.CRE_DT, 'YYYYMMDD') CRE_DT,
+A.UPD_USR_ID,
+TO_CHAR(A.UPD_DT, 'YYYYMMDD') UPD_DT
+FROM COM_INTG_CD A
+WHERE a.ownr_sub_sys_cd is not null and a.intg_cd_id is not null
+
+AND INTG_CD_TP_CD IN ('G','T')
+#if (${ownr_sub_sys_cd} != '') 
+AND   A.OWNR_SUB_SYS_CD LIKE '%'||@[ownr_sub_sys_cd]||'%'
+#end
+#if (${intg_cd_id} != '') 
+and	UPPER(A.INTG_CD_ID) like '%'||UPPER(@[intg_cd_id])|| '%'
+#end			]]></sql>
+			<params>
+				<param name="ownr_sub_sys_cd" type="12" value="" out="N"/>
+				<param name="intg_cd_id" type="12" value="" out="N"/>
+			</params>
+		</query>
+	</querys>
+</sqls>

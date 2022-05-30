@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="InvoiceManagementDBDAOComboBoxRSQL">
+			<desc><![CDATA[DESC Enter..]]></desc>
+			<sql><![CDATA[
+SELECT DISTINCT JO_CRR_CD FROM TESTPRC4			]]></sql>
+			<params>
+			</params>
+		</query>
+	</querys>
+</sqls>
