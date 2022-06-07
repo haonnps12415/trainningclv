@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="JooCarrierMgmtDBSearchRLaneCdRSQLDAOCarrierVORSQL">
+			<desc><![CDATA[DESC Enter..]]></desc>
+			<sql><![CDATA[
+Select VSL_SLAN_CD as rlane_cd
+FROM MDM_REV_LANE 
+WHERE 1 = 1 
+     AND DECODE (DELT_FLG, 'Y','D','A') = 'A' 
+ORDER BY RLANE_CD			]]></sql>
+			<params>
+			</params>
+		</query>
+	</querys>
+</sqls>
