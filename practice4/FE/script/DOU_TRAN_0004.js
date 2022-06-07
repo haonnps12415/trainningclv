@@ -326,7 +326,7 @@
     		break;
     	case IBSAVE: // retrieve
     		formObj.f_cmd.value = MULTI;
-    		sheetObj.DoSave("FNS_JOO_0901GS.do", FormQueryString(formObj));
+    		sheetObj.DoSave("DOU_TRAN_0004GS.do", FormQueryString(formObj));
     		break;
     	case IBINSERT: //Row Add button event
     		sheetObj.DataInsert(-1);
