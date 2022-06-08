@@ -14,10 +14,10 @@ package com.clt.apps.opus.esm.clv.carrier;
 
 import java.util.List;
 
-import com.clt.apps.opus.esm.clv.carrier.carrier.basic.carrierBC;
-import com.clt.apps.opus.esm.clv.carrier.carrier.basic.carrierBCImpl;
+import com.clt.apps.opus.esm.clv.carrier.carrier.basic.JooCarrierBC;
+import com.clt.apps.opus.esm.clv.carrier.carrier.basic.JooCarrierBCImpl;
 import com.clt.apps.opus.esm.clv.carrier.carrier.event.DouTran0004Event;
-import com.clt.apps.opus.esm.clv.carrier.carrier.integration.carrierDBDAO;
+import com.clt.apps.opus.esm.clv.carrier.carrier.integration.JooCarrierDBDAO;
 import com.clt.apps.opus.esm.clv.carrier.carrier.vo.CarrierVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.Event;
@@ -33,7 +33,7 @@ import com.clt.framework.support.view.signon.SignOnUserAccount;
  * ALPS-carrier Business Logic ServiceCommand - ALPS-carrier 대한 비지니스 트랜잭션을 처리한다.
  * 
  * @author Nguyen Nhat Hao
- * @see carrierDBDAO
+ * @see JooCarrierDBDAO
  * @since J2EE 1.6
  */
 
@@ -95,7 +95,7 @@ public class carrierSC extends ServiceCommandSupport {
 		// PDTO(Data Transfer Object including Parameters)
 				GeneralEventResponse eventResponse = new GeneralEventResponse();
 				DouTran0004Event event = (DouTran0004Event)e;
-				carrierBC command = new carrierBCImpl();
+				JooCarrierBC command = new JooCarrierBCImpl();
 				
 				try{
 					List<CarrierVO> list = command.searchJooCarrierList(event.getCarrierVO());
@@ -119,7 +119,7 @@ public class carrierSC extends ServiceCommandSupport {
 		// PDTO(Data Transfer Object including Parameters)
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		DouTran0004Event event = (DouTran0004Event)e;
-		carrierBC command = new carrierBCImpl();
+		JooCarrierBC command = new JooCarrierBCImpl();
 		
 		try {
 			List<CarrierVO> rlaneCds = command.searchRLaneCd(event.getCarrierVO());
@@ -165,7 +165,7 @@ public class carrierSC extends ServiceCommandSupport {
 		// PDTO(Data Transfer Object including Parameters)
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		DouTran0004Event event = (DouTran0004Event)e;
-		carrierBC command = new carrierBCImpl();
+		JooCarrierBC command = new JooCarrierBCImpl();
 
 		try{
 			List<CarrierVO> list = command.searchJooCarrierList(event.getCarrierVO());
@@ -189,7 +189,7 @@ public class carrierSC extends ServiceCommandSupport {
 		// PDTO(Data Transfer Object including Parameters)
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		DouTran0004Event event = (DouTran0004Event)e;
-		carrierBC command = new carrierBCImpl();
+		JooCarrierBC command = new JooCarrierBCImpl();
 		try{
 			begin();
 			command.manageJooCarrier(event.getCarrierVOS(),account);
