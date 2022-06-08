@@ -78,10 +78,6 @@
 <input type="hidden" name="pagerows">
 	<!-- page_title_area(S) -->
 	<div class="page_title_area clear">
-	
-		<!-- page_title(S) -->
-		<h2 class="page_title"><button type="button"><span id="title"></span></button></h2>
-		<!-- page_title(E) -->
 		
 		<!-- opus_design_btn (S) -->
 		<div class="opus_design_btn">
@@ -118,7 +114,7 @@
 						<th>Carrier</th>
 						<td><script type="text/javascript">ComComboObject('s_jo_crr_cd',1,80, 1, 0, 0);</script></td>
 						<th>Vendor</th>
-						<td><input type="text" style="width:60px;" name="s_vndr_seq" id="s_vndr_seq" dataformat="num" maxlength="6"/></td>
+						<td><input type="text" style="width:60px;" name="s_vndr_seq" id="s_vndr_seq"onblur="validateVendor(this)" onKeyPress="ComKeyOnlyNumber(this)" dataformat="num" maxlength="6"/></td>
 						<th>Create Date</th>
 						<td>
 							<input type="text" style="width:78px;text-align:center;" caption="Create Date From" name="s_cre_dt_fm" !cofield="s_cre_dt_to" dataformat="ymd" maxLength="10" minlength="8"><!--  
