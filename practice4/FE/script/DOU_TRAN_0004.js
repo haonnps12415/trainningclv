@@ -26,16 +26,6 @@
      * @extends 
      * @class DOU_TRAN_0004 : DOU_TRAN_0004 생성을 위한 화면에서 사용하는 업무 스크립트를 정의한다.
      */
-    function DOU_TRAN_0004() {
-    	this.processButtonClick		= tprocessButtonClick;
-    	this.setSheetObject 		= setSheetObject;
-    	this.loadPage 				= loadPage;
-    	this.initSheet 				= initSheet;
-    	this.initControl            = initControl;
-    	this.doActionIBSheet 		= doActionIBSheet;
-    	this.setTabObject 			= setTabObject;
-    	this.validateForm 			= validateForm;
-    }
     
    	/* 개발자 작업	*/
  // common global variable
@@ -156,7 +146,6 @@
     		with (comboObj) {
     			SetMultiSelect(1);
     	        SetDropHeight(200);
-    	        ValidChar(2,1);
     		}
     		var comboItems = crrCombo.split("|");    		
     		addComboItem(comboObj, comboItems);
@@ -202,23 +191,7 @@
             comboObj.SetItemCheck(0,true, null, null, false);
         }
     }
-    function validateForm(sheetObj, formObj, sAction) {
-    	sheetObj.ShowDebugMsg(false);
-    	switch (sAction) {
-    	case IBSEARCH: // retrieve
-    		var creDtFm = form.s_cre_dt_fm;
-            var creDtTo = form.s_cre_dt_to;
-            if(creDtFm.value != "" && creDtTo.value != "" && creDtFm.value > creDtTo.value) {
-                ComShowCodeMessage("JOO00078");
-                ComSetFocus(creDtFm);
-                return false;
-            }
-            if(!ComChkObjValid(creDtFm)) {return false;}
-            if(!ComChkObjValid(creDtTo)) {return false;}
-    		break;
-    	}
-    	return true;
-    }
+
     /**
      * setting sheet initial values and header param : sheetObj, sheetNo adding case
      * as numbers of counting sheets
@@ -315,16 +288,18 @@
      */
     function doActionIBSheet(sheetObj, formObj, sAction) {
     	sheetObj.ShowDebugMsg(false);
-    	if (!validateForm(sheetObj, formObj, sAction)) {
-    		return false;
-    	}
+
     	switch (sAction) {
     	case IBSEARCH: // retrieve
-    		formObj.f_cmd.value = SEARCH;
-    		ComOpenWait(true);
-    		sheetObj.DoSearch("DOU_TRAN_0004GS.do", FormQueryString(formObj) );
+        	if (!validateForm(sheetObj, formObj, sAction)) {
+        		return false;
+        	}else {
+        		formObj.f_cmd.value = SEARCH;
+        		ComOpenWait(true);
+        		sheetObj.DoSearch("DOU_TRAN_0004GS.do", FormQueryString(formObj) );
+        	}
     		break;
-    	case IBSAVE: // retrieve
+    	case IBSAVE: // save
     		formObj.f_cmd.value = MULTI;
     		sheetObj.DoSave("DOU_TRAN_0004GS.do", FormQueryString(formObj));
     		break;
@@ -341,9 +316,26 @@
     		break;
     	}
     }
-
+    function validateForm(sheetObj, formObj, sAction) {
+    	sheetObj.ShowDebugMsg(false);
+    	switch (sAction) {
+    	case IBSEARCH: // retrieve
+    		var creDtFm = form.s_cre_dt_fm;
+            var creDtTo = form.s_cre_dt_to;
+            if(creDtFm.value != "" && creDtTo.value != "" && creDtFm.value > creDtTo.value) {
+                ComShowCodeMessage("JOO00002");
+                ComSetFocus(creDtFm);
+                return false;
+            }
+    		break;
+    	}
+    	return true;
+    }
     function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
      	ComOpenWait(false);
+    }
+    function sheet1_OnSaveEnd(sheetObj, Code, Msg, StCode, StMsg) { 
+    	doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
     }
     function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
     	var formObj=document.form ;
@@ -360,7 +352,7 @@
     			for(var i = headerRowNum; i <= sheetObj.RowCount(); i++){
     				if(i != Row && sheetObj.GetCellValue(Row,"jo_crr_cd") == sheetObj.GetCellValue(i,"jo_crr_cd")
     						&& sheetObj.GetCellValue(Row,"rlane_cd") == sheetObj.GetCellValue(i,"rlane_cd")){
-    					ComShowCodeMessage("JOO00222");
+    					ComShowCodeMessage("JOO00001");
     					sheetObj.SetCellValue(Row, Col,OldValue,0);
     					sheetObj.SelectCell(Row, Col);
     					return;
@@ -372,7 +364,7 @@
     			var sXml 				= sheetObj.GetSearchData("FNS_JOO_0901GS.do", sParam, {sync:1});	
     			var flag				= ComGetEtcData(sXml, "ISEXIST");
     			if(flag == 'Y'){
-    				ComShowCodeMessage("JOO00222");
+    				ComShowCodeMessage("JOO00001");
     				sheetObj.SetCellValue(Row, Col,OldValue,0);
     				sheetObj.SelectCell(Row, Col);
     			}

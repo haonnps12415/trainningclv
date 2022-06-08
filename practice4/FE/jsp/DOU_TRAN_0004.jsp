@@ -61,11 +61,6 @@
 		out.println(e.toString());
 	}
 %>
-<html>
-<head>
-<title>CarrierManagement</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <script language="javascript">
 	var rlanCombo = "<%=rlaneCds%>";
 	var crrCombo = "All|<%=crrCds%>";
@@ -77,9 +72,7 @@
 		loadPage();
 	}
 </script>
-</head>
 
-<body  onLoad="setupPage();">
 <form name="form">
 <input type="hidden" name="f_cmd">
 <input type="hidden" name="pagerows">
@@ -129,8 +122,9 @@
 						<th>Create Date</th>
 						<td>
 							<input type="text" style="width:78px;text-align:center;" caption="Create Date From" name="s_cre_dt_fm" !cofield="s_cre_dt_to" dataformat="ymd" maxLength="10" minlength="8"><!--  
-							--><button type="button" class="calendar ir" name="btns_calendar1" id="btns_calendar1" tabindex="-1"></button>~
-							<input type="text" style="width:78px;text-align:center;" caption="Create Date To" name="s_cre_dt_to" !cofield="s_cre_dt_fm" dataformat="ymd" maxLength="10" minlength="8"><!-- 
+							--><button type="button" class="calendar ir" name="btns_calendar1" id="btns_calendar1" tabindex="-1"></button><!--  
+							-->~<!--  
+							--><input type="text" style="width:78px;text-align:center;" caption="Create Date To" name="s_cre_dt_to" !cofield="s_cre_dt_fm" dataformat="ymd" maxLength="10" minlength="8"><!-- 
 							--><button type="button" class="calendar ir" name="btns_calendar2" id="btns_calendar2" tabindex="-1"></button>
 						</td>
 					</tr> 
@@ -156,5 +150,3 @@
 	</div>
 	<!-- wrap_result(E) -->
 </form>
-</body>
-</html>

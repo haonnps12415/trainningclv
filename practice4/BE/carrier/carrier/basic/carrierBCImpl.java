@@ -47,7 +47,7 @@ public class carrierBCImpl extends BasicCommandSupport implements carrierBC {
 	 * @return List<CarrierVO>
 	 * @exception EventException
 	 */
-	public List<CarrierVO> CarrierVOSearchVO(CarrierVO carrierVO) throws EventException {
+	public List<CarrierVO> searchJooCarrierList(CarrierVO carrierVO) throws EventException {
 		try {
 			return dbDao.CarrierVOSearchVO(carrierVO);
 		} catch(DAOException ex) {
@@ -102,14 +102,25 @@ public class carrierBCImpl extends BasicCommandSupport implements carrierBC {
 	 * @param account SignOnUserAccount
 	 * @exception EventException
 	 */
-	public void CarrierVOMutiVO(CarrierVO[] carrierVO, SignOnUserAccount account) throws EventException{
+	public void manageJooCarrier(CarrierVO[] carrierVO, SignOnUserAccount account) throws EventException{
 		try {
 			List<CarrierVO> insertVoList = new ArrayList<CarrierVO>();
 			List<CarrierVO> updateVoList = new ArrayList<CarrierVO>();
 			List<CarrierVO> deleteVoList = new ArrayList<CarrierVO>();
+			List<CarrierVO> list = null ;
 			for ( int i=0; i<carrierVO .length; i++ ) {
+				
+				//check duplicate
+				if(carrierVO[i].getIbflag().equals("I")){
+					list = searchJooCarrierList(carrierVO[i]);
+					if(null != list && list.size() > 0){
+						throw new EventException(new ErrorHandler("ERR00001").getMessage());
+					}
+				}
+				
 				if ( carrierVO[i].getIbflag().equals("I")){
 					carrierVO[i].setCreUsrId(account.getUsr_id());
+					carrierVO[i].setUpdUsrId(account.getUsr_id());
 					insertVoList.add(carrierVO[i]);
 				} else if ( carrierVO[i].getIbflag().equals("U")){
 					carrierVO[i].setUpdUsrId(account.getUsr_id());

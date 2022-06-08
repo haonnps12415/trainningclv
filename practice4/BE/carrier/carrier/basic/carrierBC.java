@@ -34,7 +34,7 @@ public interface carrierBC {
 	 * @return List<CarrierVO>
 	 * @exception EventException
 	 */
-	public List<CarrierVO> CarrierVOSearchVO(CarrierVO carrierVO) throws EventException;
+	public List<CarrierVO> searchJooCarrierList(CarrierVO carrierVO) throws EventException;
 	
 	/**
 	 * [비즈니스대상]을 [행위] 합니다.<br>
@@ -43,7 +43,7 @@ public interface carrierBC {
 	 * @param account SignOnUserAccount
 	 * @exception EventException
 	 */
-	public void CarrierVOMutiVO(CarrierVO[] carrierVO,SignOnUserAccount account) throws EventException;
+	public void manageJooCarrier(CarrierVO[] carrierVO,SignOnUserAccount account) throws EventException;
 
 	public abstract List<CarrierVO> searchRLaneCd(CarrierVO carrierVO) throws EventException;
 

@@ -80,10 +80,10 @@ public class carrierSC extends ServiceCommandSupport {
 			if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
 				eventResponse = initData(e);
 			}else if (e.getFormCommand().isCommand(FormCommand.SEARCH)) {
-				eventResponse = CarrierVOSearchVO(e);
+				eventResponse = searchJooCarrierList(e);
 			}
 			else if (e.getFormCommand().isCommand(FormCommand.MULTI)) {
-				eventResponse = CarrierVOMutiVO(e);
+				eventResponse = manageJooCarrier(e);
 			}
 			else if (e.getFormCommand().isCommand(FormCommand.COMMAND01)) {
 				eventResponse = checkDuplicate(e);
@@ -98,7 +98,7 @@ public class carrierSC extends ServiceCommandSupport {
 				carrierBC command = new carrierBCImpl();
 				
 				try{
-					List<CarrierVO> list = command.CarrierVOSearchVO(event.getCarrierVO());
+					List<CarrierVO> list = command.searchJooCarrierList(event.getCarrierVO());
 					eventResponse.setETCData("ISEXIST", list.size() > 0 ? "Y" : "N");
 				}catch(EventException ex){
 					throw new EventException(new ErrorHandler(ex).getMessage(),ex);
@@ -161,14 +161,14 @@ public class carrierSC extends ServiceCommandSupport {
 	 * @return EventResponse
 	 * @exception EventException
 	 */
-	private EventResponse CarrierVOSearchVO(Event e) throws EventException {
+	private EventResponse searchJooCarrierList(Event e) throws EventException {
 		// PDTO(Data Transfer Object including Parameters)
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		DouTran0004Event event = (DouTran0004Event)e;
 		carrierBC command = new carrierBCImpl();
 
 		try{
-			List<CarrierVO> list = command.CarrierVOSearchVO(event.getCarrierVO());
+			List<CarrierVO> list = command.searchJooCarrierList(event.getCarrierVO());
 			eventResponse.setRsVoList(list);
 		}catch(EventException ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
@@ -185,15 +185,15 @@ public class carrierSC extends ServiceCommandSupport {
 	 * @return EventResponse
 	 * @exception EventException
 	 */
-	private EventResponse CarrierVOMutiVO(Event e) throws EventException {
+	private EventResponse manageJooCarrier(Event e) throws EventException {
 		// PDTO(Data Transfer Object including Parameters)
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		DouTran0004Event event = (DouTran0004Event)e;
 		carrierBC command = new carrierBCImpl();
 		try{
 			begin();
-			command.CarrierVOMutiVO(event.getCarrierVOS(),account);
-			eventResponse.setUserMessage(new ErrorHandler("XXXXXXXXX").getUserMessage());
+			command.manageJooCarrier(event.getCarrierVOS(),account);
+			eventResponse.setUserMessage(new ErrorHandler("BKG06071").getUserMessage());
 			commit();
 		} catch(EventException ex) {
 			rollback();
