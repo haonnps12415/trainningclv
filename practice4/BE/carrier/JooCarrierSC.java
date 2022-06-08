@@ -37,7 +37,7 @@ import com.clt.framework.support.view.signon.SignOnUserAccount;
  * @since J2EE 1.6
  */
 
-public class carrierSC extends ServiceCommandSupport {
+public class JooCarrierSC extends ServiceCommandSupport {
 	// Login User Information
 	private SignOnUserAccount account = null;
 
