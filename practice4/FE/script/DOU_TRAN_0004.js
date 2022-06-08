@@ -301,7 +301,14 @@
     		break;
     	case IBSAVE: // save
     		formObj.f_cmd.value = MULTI;
-    		sheetObj.DoSave("DOU_TRAN_0004GS.do", FormQueryString(formObj));
+    		//sheetObj.DoSave("DOU_TRN_0004GS.do", FormQueryString(formObj));
+			// save data based on data transaction status or column to database.
+			if (sheetObj.GetSaveString() != '') {
+				sheetObj.DoSave("DOU_TRAN_0004GS.do", FormQueryString(formObj));
+			} else {
+				ComShowCodeMessage("JOO00003");
+			}
+    		
     		break;
     	case IBINSERT: //Row Add button event
     		sheetObj.DataInsert(-1);
