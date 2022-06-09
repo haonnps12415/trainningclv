@@ -19,8 +19,6 @@ import com.clt.apps.opus.esm.clv.carrier.carrier.vo.CarrierVO;
 
 /**
  * ALPS-Carrier Business Logic Command Interface<br>
- * - ALPS-Carrier에 대한 비지니스 로직에 대한 인터페이스<br>
- *
  * @author Nguyen Nhat Hao
  * @since J2EE 1.6
  */
@@ -28,7 +26,7 @@ import com.clt.apps.opus.esm.clv.carrier.carrier.vo.CarrierVO;
 public interface JooCarrierBC {
 
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * This method search list data for Grid.
 	 * 
 	 * @param CarrierVO	carrierVO
 	 * @return List<CarrierVO>
@@ -37,15 +35,25 @@ public interface JooCarrierBC {
 	public List<CarrierVO> searchJooCarrierList(CarrierVO carrierVO) throws EventException;
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * This is a method make actions(save,modify,remove). 
 	 * 
 	 * @param CarrierVO[] carrierVO
 	 * @param account SignOnUserAccount
 	 * @exception EventException
 	 */
 	public void manageJooCarrier(CarrierVO[] carrierVO,SignOnUserAccount account) throws EventException;
-
+	/**
+	 * This is a method make combo in sheet
+	 * 
+	 * @param CarrierVO carrierVO
+	 * @exception EventException
+	 */
 	public abstract List<CarrierVO> searchRLaneCd(CarrierVO carrierVO) throws EventException;
-
+	/**
+	 * This is a method make combo search
+	 * 
+	 * @param CarrierVO carrierVO
+	 * @exception EventException
+	 */
 	public abstract List<CarrierVO> searchCrrCd(CarrierVO carrierVO) throws EventException;
 }

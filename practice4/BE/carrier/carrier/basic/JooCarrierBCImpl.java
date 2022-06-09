@@ -34,16 +34,16 @@ public class JooCarrierBCImpl extends BasicCommandSupport implements JooCarrierB
 	private transient JooCarrierDBDAO dbDao = null;
 
 	/**
-	 * carrierBCImpl 객체 생성<br>
-	 * carrierDBDAO를 생성한다.<br>
+	 * carrierBCImpl 
+	 * carrierDBDAO 
 	 */
 	public JooCarrierBCImpl() {
 		dbDao = new JooCarrierDBDAO();
 	}
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * This method search list data for Grid.
 	 * 
-	 * @param CarrierVO carrierVO
+	 * @param CarrierVO	carrierVO
 	 * @return List<CarrierVO>
 	 * @exception EventException
 	 */
@@ -58,10 +58,9 @@ public class JooCarrierBCImpl extends BasicCommandSupport implements JooCarrierB
 		
 	}
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * This is a method make combo in sheet
 	 * 
 	 * @param CarrierVO carrierVO
-	 * @return List<CarrierVO>
 	 * @exception EventException
 	 */
 	@Override
@@ -77,10 +76,9 @@ public class JooCarrierBCImpl extends BasicCommandSupport implements JooCarrierB
 	}
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * This is a method make combo search
 	 * 
 	 * @param CarrierVO carrierVO
-	 * @return List<CarrierVO>
 	 * @exception EventException
 	 */
 	@Override
@@ -96,7 +94,7 @@ public class JooCarrierBCImpl extends BasicCommandSupport implements JooCarrierB
 	}
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * This is a method make actions(save,modify,remove). 
 	 * 
 	 * @param CarrierVO[] carrierVO
 	 * @param account SignOnUserAccount
@@ -109,27 +107,36 @@ public class JooCarrierBCImpl extends BasicCommandSupport implements JooCarrierB
 			List<CarrierVO> deleteVoList = new ArrayList<CarrierVO>();
 			List<CarrierVO> list = null ;
 			for ( int i=0; i<carrierVO .length; i++ ) {
-				
-				//check duplicate
-				if(carrierVO[i].getIbflag().equals("I")){
+				// check mandatory
+				if (carrierVO[i].getJoCrrCd().isEmpty()
+						|| carrierVO[i].getRlaneCd().isEmpty()
+						|| carrierVO[i].getVndrSeq().isEmpty()
+						|| carrierVO[i].getCustCntCd().isEmpty()
+						|| carrierVO[i].getCustSeq().isEmpty()) {
+					throw new EventException(
+							new ErrorHandler("ERR00004").getMessage());
+				}
+				// check duplicate
+				if (carrierVO[i].getIbflag().equals("I")) {
 					list = searchJooCarrierList(carrierVO[i]);
-					if(null != list && list.size() > 0){
-						throw new EventException(new ErrorHandler("ERR00001").getMessage());
+					if (null != list && list.size() > 0) {
+						throw new EventException(
+								new ErrorHandler("ERR00001").getMessage());
 					}
 				}
-				
-				if ( carrierVO[i].getIbflag().equals("I")){
+
+				if (carrierVO[i].getIbflag().equals("I")) {
 					carrierVO[i].setCreUsrId(account.getUsr_id());
 					carrierVO[i].setUpdUsrId(account.getUsr_id());
 					insertVoList.add(carrierVO[i]);
-				} else if ( carrierVO[i].getIbflag().equals("U")){
+				} else if (carrierVO[i].getIbflag().equals("U")) {
 					carrierVO[i].setUpdUsrId(account.getUsr_id());
 					updateVoList.add(carrierVO[i]);
-				} else if ( carrierVO[i].getIbflag().equals("D")){
+				} else if (carrierVO[i].getIbflag().equals("D")) {
 					deleteVoList.add(carrierVO[i]);
 				}
 			}
-			
+
 			if ( insertVoList.size() > 0 ) {
 				dbDao.addJooCarrierS(insertVoList);
 			}

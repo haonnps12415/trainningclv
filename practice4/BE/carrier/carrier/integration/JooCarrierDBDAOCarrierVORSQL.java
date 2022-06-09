@@ -1,13 +1,13 @@
 /*=========================================================
 *Copyright(c) 2022 CyberLogitec
 *@FileName : carrierDBDAOCarrierVORSQL.java
-*@FileTitle : CarrierManagement
+*@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2022.06.03
+*@LastModifyDate : 2022.06.08
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2022.06.03 
+* 2022.06.08 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.carrier.carrier.integration;
@@ -42,13 +42,6 @@ public class JooCarrierDBDAOCarrierVORSQL implements ISQLTemplate{
 		params = new HashMap<String,String[]>();
 		String tmp = null;
 		String[] arrTmp = null;
-		tmp = java.sql.Types.VARCHAR + ",N";
-		arrTmp = tmp.split(",");
-		if(arrTmp.length !=2){
-			throw new IllegalArgumentException();
-		}
-		params.put("jo_crr_cd",new String[]{arrTmp[0],arrTmp[1]});
-
 		tmp = java.sql.Types.VARCHAR + ",N";
 		arrTmp = tmp.split(",");
 		if(arrTmp.length !=2){
@@ -110,7 +103,7 @@ public class JooCarrierDBDAOCarrierVORSQL implements ISQLTemplate{
 		query.append("WHERE 1 = 1" ).append("\n"); 
 		query.append("#if (${jo_crr_cd} != '' && ${jo_crr_cd} != 'All') " ).append("\n"); 
 		query.append("AND A.JO_CRR_CD IN (" ).append("\n"); 
-		query.append("	@[jo_crr_cd]" ).append("\n"); 
+		query.append("	#foreach($key IN ${obj_list_no}) #if($velocityCount < $obj_list_no.size()) '$key', #else '$key' #end #end" ).append("\n"); 
 		query.append(")" ).append("\n"); 
 		query.append("#end" ).append("\n"); 
 		query.append("#if (${rlane_cd} != '') " ).append("\n"); 

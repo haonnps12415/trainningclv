@@ -17,12 +17,8 @@ import com.clt.apps.opus.esm.clv.carrier.carrier.vo.CarrierVO;
 
 
 /**
- * DOU_TRAN_0004 에 대한 PDTO(Data Transfer Object including Parameters)<br>
- * -  DOU_TRAN_0004HTMLAction에서 작성<br>
- * - ServiceCommand Layer로 전달하는 PDTO로 사용<br>
- *
  * @author Nguyen Nhat Hao
- * @see DOU_TRAN_0004HTMLAction 참조
+ * @see DOU_TRAN_0004HTMLAction 
  * @since J2EE 1.6
  */
 

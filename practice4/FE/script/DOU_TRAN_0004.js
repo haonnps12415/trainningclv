@@ -263,7 +263,7 @@ function s_jo_crr_cd_OnCheckClick(comboObj, index, code) {
     			SetColProperty("cust_cnt_cd", { AcceptKeys : "E|N", InputCaseSensitive : 1});
     			SetColProperty("cust_seq", { AcceptKeys : "N"});
     			SetColProperty("trd_cd", { AcceptKeys : "E|N", InputCaseSensitive : 1 });
-    			SetColProperty("rlane_cd", { ComboText : rlanCombo, ComboCode : rlanCombo });
+    			SetColProperty("rlane_cd", { ComboText : "|"+rlanCombo, ComboCode : "|"+rlanCombo });
     			SetColProperty("delt_flg", { ComboText : "N|Y", ComboCode : "N|Y" });
     			SetWaitImageVisible(0);
     			resizeSheet();
@@ -297,16 +297,22 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 		break;
 	case IBSAVE: /* save*/
 		formObj.f_cmd.value = MULTI;
-/*		 sheetObj.DoSave("DOU_TRN_0004GS.do", FormQueryString(formObj));
-		 save data based on data transaction status or column to database.*/
-		if (sheetObj.GetSaveString() != '') {
-			sheetObj.DoSave("DOU_TRAN_0004GS.do", FormQueryString(formObj));
-		} else {
-			ComShowCodeMessage("COM00003");
-		}
-
+/*	save data based on data transaction status or column to database.*/
+		if (ComShowConfirm(ComGetMsg("COM130101", "data"))) {
+			var sParam = sheetObj.GetSaveString(false, true);
+			if (sheetObj.IsDataModified() && sParam == "")
+				return;
+			sParam += "&f_cmd=" + formObj.f_cmd.value;
+			var sXml = sheetObj.GetSaveData("DOU_TRAN_0004GS.do", sParam);
+			var sav = ComGetEtcData(sXml, 'TRANS_RESULT_KEY');
+			if (sav != "F") {
+				sheetObj.LoadSaveData(sXml);
+			} else {
+				ComShowCodeMessage("COM00003");
+			}
+		}		
 		break;
-	case IBINSERT: /* Row Add button event*/
+	case IBINSERT: /* Row Add button event */
 		sheetObj.DataInsert(-1);
 		break;
 	case IBDELETE:  /*Row Delete button event*/
@@ -359,7 +365,7 @@ function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) {
 	ComOpenWait(false);
 }
 function sheet1_OnSaveEnd(sheetObj, Code, Msg, StCode, StMsg) {
-	doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
+	 doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
 }
 function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag) {
 	var formObj = document.form;

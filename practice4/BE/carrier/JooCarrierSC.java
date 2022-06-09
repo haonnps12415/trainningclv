@@ -30,7 +30,7 @@ import com.clt.framework.support.view.signon.SignOnUserAccount;
 
 
 /**
- * ALPS-carrier Business Logic ServiceCommand - ALPS-carrier 대한 비지니스 트랜잭션을 처리한다.
+ * ALPS-carrier Business Logic ServiceCommand - ALPS-CarrierJoo process business transactions.
  * 
  * @author Nguyen Nhat Hao
  * @see JooCarrierDBDAO
@@ -42,8 +42,8 @@ public class JooCarrierSC extends ServiceCommandSupport {
 	private SignOnUserAccount account = null;
 
 	/**
-	 * carrier system 업무 시나리오 선행작업<br>
-	 * 업무 시나리오 호출시 관련 내부객체 생성<br>
+	 * CarrierJoo Start the work scenario.
+	 * Creating related internal objects when calling a business scenario.
 	 */
 	public void doStart() {
 		log.debug("carrierSC 시작");
@@ -56,16 +56,15 @@ public class JooCarrierSC extends ServiceCommandSupport {
 	}
 
 	/**
-	 * carrier system 업무 시나리오 마감작업<br>
-	 * 업무 시나리오 종료시 관련 내부객체 해제<br>
+	 * CarrierJoo system Closing the work scenario
+	 * Release related internal objects at the end of the business scenario
 	 */
 	public void doEnd() {
 		log.debug("carrierSC 종료");
 	}
 
 	/**
-	 * 각 이벤트에 해당하는 업무 시나리오 수행<br>
-	 * ALPS-carrier system 업무에서 발생하는 모든 이벤트의 분기처리<br>
+	 * This is a method that divides tasks by different actions
 	 * 
 	 * @param e Event
 	 * @return EventResponse
@@ -91,6 +90,13 @@ public class JooCarrierSC extends ServiceCommandSupport {
 		}
 		return eventResponse;
 	}
+	/**
+	 * this method for checking duplicate data
+	 * 
+	 * @param Event e
+	 * @return EventResponse
+	 * @exception EventException
+	 */
 	private EventResponse checkDuplicate(Event e) throws EventException {
 		// PDTO(Data Transfer Object including Parameters)
 				GeneralEventResponse eventResponse = new GeneralEventResponse();
@@ -154,8 +160,7 @@ public class JooCarrierSC extends ServiceCommandSupport {
 	}
 
 	/**
-	 * DOU_TRAN_0004 : [이벤트]<br>
-	 * [비즈니스대상]을 [행위]합니다.<br>
+	 * This is a method search a list data on Grid.
 	 * 
 	 * @param Event e
 	 * @return EventResponse
@@ -178,8 +183,7 @@ public class JooCarrierSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * DOU_TRAN_0004 : [이벤트]<br>
-	 * [비즈니스대상]을 [행위]합니다.<br>
+	 *This is a method make actions(save,modify,remove). 
 	 *
 	 * @param Event e
 	 * @return EventResponse
